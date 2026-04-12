@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>共同住宅の音環境解説資料（内部向け）</title>
+<style>
+:root {
+  --bg:            #f4f6f9;
+  --surface:       #ffffff;
+  --surface-2:     #f0f3f7;
+  --border:        rgba(15,23,42,0.09);
+  --border-md:     rgba(15,23,42,0.16);
+  --text:          #111827;
+  --muted:         #5c6978;
+  --hint:          #9aaab8;
+  --radius-lg:     12px;
+  --radius-md:     8px;
+
+  --teal-strong:   #1D9E75;
+  --teal-bg:       #E1F5EE;
+  --teal-text:     #085041;
+  --teal-border:   #9FE1CB;
+
+  --purple-strong: #7F77DD;
+  --purple-bg:     #EEEDFE;
+  --purple-text:   #3C3489;
+  --purple-border: #CECBF6;
+  --purple-dark:   #534AB7;
+
+  --green-strong:  #1D9E75;
+  --green-bg:      #EAF3DE;
+  --green-text:    #27500A;
+  --green-border:  #C0DD97;
+
+  --red-strong:    #E24B4A;
+  --red-bg:        #FCEBEB;
+  --red-text:      #791F1F;
+  --red-border:    #F7C1C1;
+
+  --amber-strong:  #BA7517;
+  --amber-bg:      #FAEEDA;
+  --amber-text:    #633806;
+  --amber-border:  #FAC775;
+
+  --blue-strong:   #378ADD;
+  --blue-bg:       #E6F1FB;
+  --blue-text:     #0C447C;
+  --blue-border:   #B5D4F4;
+
+  --consumer-strong: #0F6E56;
+  --consumer-bg:     #E1F5EE;
+  --consumer-text:   #054035;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg)}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Hiragino Sans","Yu Gothic UI","Yu Gothic",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  padding:24px 20px 60px;
+}
+.wrap{max-width:1200px;margin:0 auto}
+h1{font-size:21px;font-weight:700;letter-spacing:-.02em;margin-bottom:20px}
+
+/* ── topic tabs ── */
+.topic-row{display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap}
+.t-btn{
+  padding:6px 15px;border-radius:999px;
+  border:1px solid var(--border-md);
+  background:var(--surface);color:var(--muted);
+  font-size:13px;font-weight:700;cursor:pointer;
+  transition:all .14s;font-family:inherit;white-space:nowrap
+}
+.t-btn:hover{color:var(--text);border-color:var(--teal-strong)}
+.t-btn.act-topic{background:#0F6E56;color:#E1F5EE;border-color:#0F6E56}
+
+/* ── phase tabs ── */
+.phase-wrap{
+  display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap;
+  padding:8px 12px;
+  background:var(--surface);
+  border-radius:var(--radius-md);
+  border:1px solid var(--border);
+  align-items:center
+}
+.phase-lbl{font-size:10px;color:var(--hint);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-right:4px}
+
+/* phase button — provider only (purple) */
+.ph-btn{
+  padding:5px 12px;border-radius:999px;
+  border:1px solid var(--purple-border);
+  background:var(--purple-bg);color:var(--purple-text);
+  font-size:12px;font-weight:700;cursor:pointer;
+  transition:all .14s;font-family:inherit;white-space:nowrap
+}
+.ph-btn:hover{border-color:var(--purple-strong)}
+.ph-btn.act-phase{background:var(--purple-dark);color:#EEEDFE;border-color:var(--purple-dark)}
+
+/* phase button — mixed (teal) */
+.ph-btn.mixed{
+  border-color:var(--teal-border);
+  background:var(--teal-bg);color:var(--teal-text)
+}
+.ph-btn.mixed:hover{border-color:var(--teal-strong)}
+.ph-btn.mixed.act-phase{background:#0F6E56;color:#E1F5EE;border-color:#0F6E56}
+
+/* ── depth tabs ── */
+.depth-row{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;align-items:center}
+.depth-lbl{font-size:10px;color:var(--hint);font-weight:700;letter-spacing:.06em;text-transform:uppercase;margin-right:4px}
+.d-btn{
+  padding:5px 12px;border-radius:999px;
+  border:1px solid var(--border-md);
+  background:var(--surface);color:var(--muted);
+  font-size:12px;font-weight:700;cursor:pointer;
+  transition:all .14s;font-family:inherit;white-space:nowrap
+}
+.d-btn:hover{color:var(--text)}
+.d-btn.act-depth{background:var(--text);color:#fff;border-color:var(--text)}
+
+/* ── legend ── */
+.legend{display:flex;gap:10px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted);font-weight:600}
+.leg-dot{width:10px;height:10px;border-radius:3px}
+
+.mode-note{
+  margin-bottom:14px;
+  padding:12px 14px;
+  border-radius:var(--radius-md);
+  border:1px solid var(--border);
+  background:var(--surface);
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.7;
+}
+.mode-note strong{color:var(--text)}
+.mode-note .mini{display:block;color:var(--hint);font-size:11px;margin-top:2px}
+
+.tbl-wrap{overflow-x:auto;border-radius:var(--radius-lg);border:1px solid var(--border);box-shadow:0 2px 12px rgba(0,0,0,.05)}
+.table-compact thead th:first-child{width:180px;min-width:160px}
+.table-compact tbody td.row-label{width:180px;min-width:160px}
+
+/* ── table ── */
+table{width:100%;border-collapse:collapse;background:var(--surface)}
+
+thead th{
+  padding:11px 14px;
+  text-align:left;
+  font-size:12px;font-weight:700;
+  background:var(--surface-2);
+  border-bottom:1px solid var(--border-md);
+  letter-spacing:.03em;
+  white-space:nowrap
+}
+thead th:first-child{
+  width:160px;min-width:140px;
+  border-right:1px solid var(--border-md);
+  color:var(--muted)
+}
+thead th.col-design{color:var(--purple-text)}
+thead th.col-sales{color:var(--purple-text)}
+thead th.col-consumer{color:var(--consumer-strong)}
+
+.col-indicator{
+  display:inline-block;width:8px;height:8px;border-radius:2px;
+  margin-right:6px;vertical-align:middle
+}
+.col-indicator.design{background:var(--purple-strong)}
+.col-indicator.sales{background:var(--purple-strong)}
+.col-indicator.consumer{background:var(--consumer-strong)}
+
+tbody tr{border-bottom:1px solid var(--border)}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover td{background:#fafbfc}
+
+tbody td{
+  padding:13px 14px;
+  vertical-align:top;
+  font-size:13px;line-height:1.6;
+}
+tbody td.row-label{
+  font-weight:700;font-size:13px;
+  color:var(--text);
+  border-right:1px solid var(--border-md);
+  background:var(--surface-2);
+  white-space:nowrap;
+  vertical-align:middle
+}
+tbody td.col-design,
+tbody td.col-sales{color:var(--muted)}
+tbody td.col-consumer{color:var(--muted)}
+
+/* ── cell content types ── */
+.cell-stack{display:flex;flex-direction:column;gap:8px}
+.cell-text{color:var(--muted);line-height:1.65;white-space:pre-line}
+
+.do-list{display:flex;flex-direction:column;gap:8px}
+.do-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-size:13px;
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.do-tag{
+  flex:0 0 auto;
+  margin-top:0;
+  align-self:center;
+}
+
+.do-row > span:last-child{
+  flex:1 1 auto;
+  white-space:pre-line;
+}
+
+.pill{
+  display:inline-flex;align-items:center;
+  padding:2px 7px;border-radius:999px;
+  font-size:10px;font-weight:800;letter-spacing:.03em;text-transform:uppercase;
+  border:1px solid transparent
+}
+.pill-do  {background:var(--green-bg); color:var(--green-text); border-color:var(--green-border)}
+.pill-dont{background:var(--red-bg);   color:var(--red-text);   border-color:var(--red-border)}
+.pill-amber{background:var(--amber-bg);color:var(--amber-text);border-color:var(--amber-border)}
+
+.panel{
+  border-radius:var(--radius-md);
+  padding:9px 11px;
+  border:1px solid var(--border);
+  background:var(--surface-2);
+  font-size:13px;color:var(--muted);line-height:1.6;
+  margin-bottom:6px
+}
+.panel:last-child{margin-bottom:0}
+.panel.green {border-left:3px solid var(--green-strong); padding-left:9px}
+.panel.purple{border-left:3px solid var(--purple-strong);padding-left:9px}
+.panel.teal  {border-left:3px solid var(--teal-strong);  padding-left:9px}
+.panel.amber {border-left:3px solid var(--amber-strong); padding-left:9px}
+.panel.red   {border-left:3px solid var(--red-strong);   padding-left:9px}
+.panel h5{margin:0 0 4px;font-size:11px;font-weight:700;color:var(--text)}
+.panel p{margin:0;white-space:pre-line}
+.panel.plain{border-left:3px solid var(--blue-border);padding-left:9px;background:#fbfcfe}
+.panel.surface-card p{color:var(--text)}
+.panel.action-card{padding:10px 11px}
+.panel.action-card .do-row{margin:0}
+
+
+.tool-row{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  margin-bottom:14px;
+  flex-wrap:wrap;
+}
+.tool-search{flex:1 1 320px}
+.tool-search input{
+  width:100%;
+  padding:10px 12px;
+  border-radius:10px;
+  border:1px solid var(--border-md);
+  background:var(--surface);
+  color:var(--text);
+  font:inherit;
+}
+.tool-check{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--surface);
+  font-size:12px;
+  color:var(--muted);
+  white-space:nowrap;
+}
+.tool-status{
+  margin-left:auto;
+  font-size:12px;
+  color:var(--hint);
+}
+.cite{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  margin-left:4px;
+  padding:0 6px;
+  min-height:18px;
+  border-radius:999px;
+  border:1px solid var(--blue-border);
+  background:var(--blue-bg);
+  color:var(--blue-text);
+  font-size:10px;
+  font-weight:800;
+  line-height:1.4;
+  text-decoration:none;
+  vertical-align:baseline;
+}
+.cite:hover{border-color:var(--blue-strong);background:#fff}
+.source-wrap{
+  margin-top:16px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:var(--radius-lg);
+  background:var(--surface);
+  box-shadow:0 2px 12px rgba(0,0,0,.05);
+}
+.source-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.source-head h2{font-size:15px;color:var(--text)}
+.source-sub{font-size:11px;color:var(--hint)}
+.source-list{display:flex;flex-direction:column;gap:8px}
+.source-item{
+  padding:10px 12px;
+  border:1px solid var(--border);
+  border-radius:10px;
+  background:var(--surface-2);
+}
+.source-item:target{outline:2px solid var(--blue-strong);outline-offset:2px}
+.source-code{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:38px;
+  padding:0 8px;
+  min-height:22px;
+  margin-right:8px;
+  border-radius:999px;
+  background:var(--blue-bg);
+  color:var(--blue-text);
+  font-size:10px;
+  font-weight:800;
+  border:1px solid var(--blue-border);
+}
+.source-title{font-size:12px;font-weight:700;color:var(--text)}
+.source-note{margin-top:4px;font-size:12px;color:var(--muted);line-height:1.6;white-space:pre-line}
+.source-link{display:inline-block;margin-top:6px;font-size:12px;color:var(--blue-text);text-decoration:none}
+.source-link:hover{text-decoration:underline}
+.empty-state td{color:var(--hint);font-style:italic}
+
+.wip{color:var(--hint);font-style:italic;font-size:12px}
+
+/* ── tooltip ── */
+.term{border-bottom:1.5px dashed var(--border-md);cursor:help;position:relative;display:inline}
+.tip{
+  display:none;position:absolute;
+  bottom:calc(100% + 4px);left:0;
+  background:var(--surface);border:1px solid var(--border-md);
+  border-radius:var(--radius-md);padding:7px 10px;
+  font-size:12px;color:var(--muted);width:230px;z-index:30;
+  line-height:1.5;box-shadow:0 4px 16px rgba(0,0,0,.10)
+}
+.term:hover .tip{display:block}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>共同住宅の音環境解説資料（内部向け）</h1>
+<!-- <div style="margin:-8px 0 16px;color:var(--hint);font-size:12px;line-height:1.6">Data編集メモ：<code>surface</code> / <code>body</code> / <code>s</code> はバッククォートで保持。VSCodeで改行すると、そのまま表示にも反映されます。</div> -->
+
+<div class="topic-row" id="ttabs">
+  <button class="t-btn act-topic" data-t="basics">基礎情報</button>
+  <button class="t-btn" data-t="floor">床衝撃音</button>
+</div>
+
+<div class="phase-wrap" id="prow" style="display:none">
+  <span class="phase-lbl">フェーズ</span>
+  <button class="ph-btn act-phase" data-ph="plan">Phase 1</button>
+  <button class="ph-btn" data-ph="design">Phase 2</button>
+  <button class="ph-btn" data-ph="const">Phase 3</button>
+  <button class="ph-btn mixed" data-ph="sales">Phase 4</button>
+  <button class="ph-btn mixed" data-ph="living">Phase 5</button>
+</div>
+
+<div class="depth-row">
+  <span class="depth-lbl"></span>
+  <button class="d-btn act-depth" data-d="surface">概要</button>
+  <button class="d-btn" data-d="tech">技術詳細</button>
+  <button class="d-btn" data-d="action">Do / Do not</button>
+</div>
+
+<div class="legend" id="legend"></div>
+
+<div class="mode-note" id="mode-note"></div>
+
+<div class="tool-row">
+  <div class="tool-search">
+    <input id="row-filter" type="search" placeholder="項目名や本文を絞り込み" aria-label="項目名や本文を絞り込み"/>
+  </div>
+  <label class="tool-check"><input id="cite-only" type="checkbox"/> 引用ありのみ</label>
+  <div class="tool-status" id="tool-status"></div>
+</div>
+
+<div class="tbl-wrap">
+  <table id="main-table">
+    <thead id="thead"></thead>
+    <tbody id="tbody"></tbody>
+  </table>
+</div>
+
+<div class="source-wrap" id="source-wrap" hidden>
+  <div class="source-head">
+    <h2>引用・注記</h2>
+    <div class="source-sub" id="source-sub">この表示で参照している出典</div>
+  </div>
+  <div class="source-list" id="source-list"></div>
+</div>
+</div>
+
+<script>
+const TERMS={
+  "LH値":"重量床衝撃音（子どもの飛び跳ね等）の遮音等級。数値が小さいほど性能が高い。",
+  "LL値":"軽量床衝撃音（物の落下・椅子引き摺り等）の遮音等級。数値が小さいほど性能が高い。",
+  "スラブ":"鉄筋コンクリートの床板本体。厚いほど重量音に有利だが自重・コスト・階高とトレードオフ。",
+  "二重床":"スラブ上に防振ゴム支持脚で浮かせた床。LL値に有効だがLH値は直貼りと同等以下になる場合がある。",
+  "暗騒音":"室内の背景騒音レベル。高性能サッシ導入後など暗騒音が下がると生活音の相対的な聞こえ方が増す。",
+  "ΔLL等級":"床仕上げ材の軽量床衝撃音低減性能の等級。ΔLL(I)-4等が一般的な防音フローリングの水準。",
+};
+
+const SOURCES = {
+  N1: {
+    title: "出典要設定：実験室値と実建物値の乖離に関する資料",
+    note: "±10 dB程度の乖離という記述の裏付けをここに設定する。JIS解説、学会資料、技術資料などを紐づける想定。",
+    url: ""
+  },
+  N2: {
+    title: "出典要設定：測定条件の違いが結果に影響することに関する資料",
+    note: "室容積、残響時間、測定位置などが結果に影響することの裏付けをここに設定する。",
+    url: ""
+  },
+  P1: {
+    title: "2024年度 一般財団法人日本建築センター(BCJ)研究助成:「共同住宅の音環境設計における性能水準設定の実態調査」報告書, 東京大学 大学院工学系研究科 佐久間哲也研究室, 2025年3月",
+    note: `設計目標値がLH-50,竣工時許容値がLH-55程度の水準で設定されている事例が3/11社であったとのこと。
+          また、設計目標値がLH-50,竣工時許容値がLH-50の場合が2社、設計目標値がLH-55,竣工時許容値がLH-55の場合が2社示されており、
+          不動産協会に所属している協会員企業の中でも、この程度の水準で設定されている事例があることがわかる。`,
+    url: ""
+  },
+  P2: {
+    title: "建築物の遮音性能基準と設計指針[第二版]」p95",
+    note: `スラブ厚200（mm）の場合、スラブ面積12から40（㎡）まではLH-55相当の遮音等級。
+          注：普通コンクリートスラブ、４周大梁支持、スパン比1.0-1.5程度の場合、床仕上げ構造・天井なしの場合を想定？
+          `,
+    url: ""
+  },
+  S1: {
+    title: "ISO 19488:2020(E) Acoustics — Neighbour noise — Guidance for the management of noise in residential buildings",
+    note: `「隣人の生活行動を特に制限しなくても、騒音が気になりにくい」や「隣人が周囲に気を配った生活をしていれば、大きな騒音トラブルは起きにくい」（いずれも意訳）という記述がある。`,
+    url: ""
+  },
+};
+
+const CITE_RE = /\[([A-Z]\d+)\]/g;
+
+function wt(s){
+  return String(s).replace(/LH値|LL値|スラブ|二重床|暗騒音|ΔLL等級/g,
+    m=>`<span class="term">${m}<span class="tip">${TERMS[m]}</span></span>`);
+}
+
+function normalizeText(v){
+  if(v == null) return "";
+  if(Array.isArray(v)) return v.join("\n");
+  return String(v);
+}
+
+function stripCites(text){
+  return String(text || "")
+    .replace(CITE_RE, "")
+    .replace(/[ \t]{2,}/g, " ")
+    .replace(/\n[ \t]+/g, "\n")
+    .trim();
+}
+
+function renderRichText(text, { citations = false } = {}){
+  const base = citations ? normalizeText(text) : stripCites(normalizeText(text));
+  let html = wt(base);
+  if(citations){
+    html = html.replace(CITE_RE, (_, id) => {
+      const meta = SOURCES[id];
+      const label = meta ? id : `${id}?`;
+      const title = meta ? `${id}: ${meta.title}` : `${id}: 出典未設定`;
+      return `<a class="cite" href="#src-${id}" title="${title}">${label}</a>`;
+    });
+  }
+  return html;
+}
+
+function collectSourceIdsFromText(text){
+  const ids = [];
+  normalizeText(text).replace(CITE_RE, (_, id) => {
+    ids.push(id);
+    return _;
+  });
+  return ids;
+}
+
+function canShowTechCitations(){
+  return gd === "tech" && (ct === "basics" || PHASE_TECH_ONLY.has(cp));
+}
+
+function collectSourceIdsFromData(data, depth, columnKey){
+  if(!data || depth !== "tech" || columnKey !== "design") return [];
+  return (data.tech || []).flatMap(panel => collectSourceIdsFromText(panel.body));
+}
+
+function collectSourceIdsFromRow(row){
+  if(!canShowTechCitations()) return [];
+  return [...new Set(collectSourceIdsFromData(row.design, gd, "design"))];
+}
+
+function renderText(v, cls="cell-text"){
+  const text = normalizeText(v);
+  if(!text) return '<span class="wip">準備中</span>';
+  return `<div class="${cls}">${renderRichText(text, { citations: false })}</div>`;
+}
+
+function isPanelArray(v){
+  return Array.isArray(v)
+    && v.length > 0
+    && typeof v[0] === "object"
+    && v[0] !== null
+    && ("body" in v[0] || "head" in v[0]);
+}
+
+function renderSurfaceCard(v){
+  if(!v) return '<span class="wip">準備中</span>';
+
+  if(isPanelArray(v)){
+    return `<div class="cell-stack">${v.map(p => `
+      <div class="panel ${p.type || "plain"} surface-card">
+        ${p.head ? `<h5>${renderRichText(p.head, { citations: false })}</h5>` : ""}
+        <p>${renderRichText(normalizeText(p.body), { citations: false })}</p>
+      </div>`).join("")}</div>`;
+  }
+
+  const text = normalizeText(v);
+  if(!text) return '<span class="wip">準備中</span>';
+  return `<div class="cell-stack"><div class="panel plain surface-card"><p>${renderRichText(text, { citations: false })}</p></div></div>`;
+}
+
+function renderActionCards(items){
+  if(!items || !items.length) return '<span class="wip">準備中</span>';
+  return `<div class="do-list">${items.map(i=>`
+    <div class="panel ${i.do ? "green" : "red"} action-card">
+      <div class="do-row">
+        <span class="do-tag"><span class="pill ${i.do ? "pill-do" : "pill-dont"}">${i.do ? "Do" : "Do not"}</span></span>
+        <span>${renderRichText(normalizeText(i.s), { citations: false })}</span>
+      </div>
+    </div>`).join("")}</div>`;
+}
+
+function renderCell(data, depth, columnKey){
+  if(!data) return '<span class="wip">準備中</span>';
+  if(depth === "surface") return renderSurfaceCard(data.surface);
+  if(depth === "tech"){
+    if(!data.tech || !data.tech.length) return '<span class="wip">準備中</span>';
+    const useCitations = columnKey === "design" && canShowTechCitations();
+    return `<div class="cell-stack">${data.tech.map(p => `
+      <div class="panel ${p.type || "green"}">
+        <h5>${renderRichText(p.head, { citations: false })}</h5>
+        <p>${renderRichText(p.body, { citations: useCitations })}</p>
+      </div>`).join("")}</div>`;
+  }
+  if(depth === "action") return renderActionCards(data.action);
+  return "";
+}
+
+// ── DATA ──────────────────────────────────────────
+// 編集ルール
+// - label / head / surface / body / s はバッククォート文字列
+// - 文字列中で改行すると、そのままPreviewにも反映
+// - 将来的に ["1行目", "2行目"] の配列でも保持可能
+const WIP = {
+  surface:
+  `準備中`,
+  tech:[
+    {type:"amber",head:`準備中`,body:
+    `準備中`}
+  ],
+  action:[
+    {do:true,s:
+      `準備中`},
+    {do:false,s:
+      `準備中`},
+  ],
+}; // consumer placeholder template
+
+const D = {
+  basics: [
+    {
+      label:`この音、うるさい？しずか？`,
+      design:{
+        surface:[
+          {type:"purple",head:`住んでいる部屋で聞こえる音`,body:
+          `①受け手の感受性（聴覚・生活リズム・敏感さ）
+            ②出し手の生活行動（子ども・ペット・楽器・夜型）
+            ③周辺環境（外の音、暗騒音）
+            ④建物の性能（遮音・吸音）`},
+          {type:"purple",head:`対策できるのはなに？`,body:
+          `設計で直接扱えるのは主として④であり、必要に応じて③を踏まえた仕様設定、想定される②を前提とした性能設定を行うことになる。
+          設計上は「性能を上げれば必ず静かになる」という整理ではなく、制御可能な変数と制御できない変数を切り分けて扱う必要がある。`},
+          ],
+        tech:[
+          {type:"green",head:`居住時の体感とは`,body:
+          `遮音性能や吸音性能は建物側で設定できるが、実際の居住時の体感は、受け手の感受性や出し手の生活行動との相互作用で決まる。[S1]
+          `},
+          {type:"green",head:`技術的背景`,body:
+          `設計図書や説明資料では、建物側で講じている対策を明示しつつ、その効果の範囲を適切に表現する必要がある。
+          「建物として何を担保しているか」を示すことは重要だが、「静かさそのものの保証」と混同させない整理が必要である。`},
+        ],
+        action:[
+          {do:true, s:
+            `音環境を説明する際は、まず4つの要素があることを整理したうえで、設計で担保する範囲を明示する。
+            建物性能で扱う部分と、居住者の行動や感じ方に依存する部分を切り分けて表現する。`},
+          {do:false,s:
+            `建物性能だけで音環境が決まるように説明する。
+            性能を上げれば常に静かになる、という単純な因果関係として扱う。`},
+        ],
+      },
+      sales:{
+        surface:[
+          {type:"purple",head:`音の大小は建物性能だけで決まらない`,body:
+          `音の感じ方は建物性能だけで決まるものではなく、隣戸や上下階の生活行動、時間帯、住まい方によっても変わる。
+          営業段階では「対策はしているが、全く音が聞こえないわけではない」ことを前提に説明する必要がある。
+          性能だけを前面に出すのではなく、音の感じ方には幅があることを具体的に共有することが重要。`},
+        ],
+        tech:[
+          {type:"purple",head:`自分と隣人の生活行動が違う`,body:
+          `音問題のクレームは建物性能の問題と隣人の生活行動の問題が絡み合っていることが多い。そのため、「建物は基準を満たしている」だけでは不十分な場合がある。
+          音に関する不満は、建物性能の不足だけでなく、生活行動や期待値のずれが重なって発生することが多い。`},
+          {type:"purple",head:`何を対策したか？`,body:
+          `社内や国の基準を満たしている。という説明だけでは、購入者の納得につながらない場合が多い。
+          営業上は、対策の有無と限界の両方をあらかじめ伝え、「絶対に静かで聞こえない」等の誤認を避けることが重要である。`},
+        ],
+        action:[
+          {do:true, s:
+            `「音への配慮はしているが、感じ方や生活時間帯によって印象は変わる」と説明する。
+              建物として講じている対策の内容と、全く音が聞こえないわけではないことをセットで伝える。`},
+          {do:false,s:
+            `「高遮音だから気になりません」
+              性能等級や仕様だけを前面に出して、実際の暮らし方の影響を説明しない。
+            「隣人ガチャ次第」と投げっぱなしにする。`},
+        ],
+      },
+      consumer: {
+        surface:[
+          {type:"purple",head:`実は戸建てよりも近い距離`,body:
+          `ご近所づきあいが簡単そうですが、戸建てよりも住戸同市の距離は近いです。
+          そのため、自分の生活音も相手に届く可能性があり、相手の生活音もこちらに届く可能性があります。
+          「建物の性能」だけでなく、「どのように暮らすか」も音環境の一部になります。`},
+        ],
+        tech:[
+          {type:"purple",head:`自分と他人の感覚は同じではない`,body:
+          `同じ音でも、気になる人と気にならない人がいること、自分では普通だと思う生活行動でも、時間帯や建物条件によっては相手に強く伝わることがある。
+          音の問題は、相手だけでなく自分にも関係するものとして考えるのが現実的です。`},
+        ],
+        action:[
+          {do:true, s:
+            `入居前に「自分の生活音も周囲に伝わる可能性がある」と理解しておく。
+            子どもの足音、家具の移動、夜間の家事など、時間帯と行動に気を配る。`},
+          {do:false,s:
+            `「自分は静かに暮らしているから問題ない」と決めつける。
+            逆に、「性能が高いはずだから何をしても大丈夫」と考える。`},
+        ],
+      },
+    },
+    {
+  label:`共同住宅で聞こえる音の種類`,
+  design:{
+    surface:[
+          {type:"purple",head:`気になる音の種類`,body:
+          `床や壁・天井を通って伝わる音、空気を通って伝わる音、設備を介して伝わる音、色々ある。
+          「共同住宅で聞こえる音」を理解する際は、まず音の種類ごとに整理することが重要。`},
+        ],
+    tech:[
+      {type:"green",head:`音の大きな分類`,body:
+      `共同住宅で聞こえる音には、上階の足音や物音のような床衝撃音、隣戸や上下階の話し声・テレビ音・楽器音などの空気伝搬音、給排水設備や換気設備などを介して伝わる設備音がある。
+      それぞれ伝わり方も支配要因も異なるため、必要な対策も同じではない。`},
+    ],
+    action:[
+      {do:true, s:
+        `共同住宅で問題になりやすい音を、床衝撃音、空気伝搬音、設備音などに分けて整理する。
+        まず全体像を示した上で、個別の音の話に入る。`},
+      {do:false,s:
+        `共同住宅で聞こえる音を、床の音だけで代表させる。
+        音の種類が違っても同じ考え方で説明する。`},
+    ],
+  },
+  sales:{
+    surface:[
+          {type:"purple",head:`ユーザーが気にしている音の種類を知ろう`,body:
+          `営業時には「どんな種類の音があるか」「自社がどんな音に対して特に配慮しているか」「相手がどんな音を気にするか」を理解して説明する必要がある。
+          特定の音だけを考えて共同住宅全体の音環境を説明すると、実態より狭い理解になりやすい。`},
+        ],
+    tech:[
+      {type:"purple",head:`音の種類を把握する`,body:
+      `- 購入者は「音」とひとまとめに受け取りやすいが、実際には音の種類によって原因も対策も異なる。
+      - 最初に音の種類を整理しておくと、その後の床衝撃音や遮音性能の説明が理解されやすくなる。`},
+      {type:"purple",head:`ライフスタイルに興味を持つ`,body:
+      `- 購入予定の方や入居者がどんなライフスタイルなのか、どんな音が気になるのかを把握することが重要である。`},
+    ],
+    action:[
+      {do:true, s:
+        `「共同住宅で気になりやすい音にはいくつか種類がある」と前置きしてから説明する。`},
+      {do:false,s:
+        `共同住宅の音問題を、上階の足音だけの問題として説明する。`},
+    ],
+  },
+  consumer:{
+    surface:[
+          {type:"purple",head:`知っていますか？`,body:
+          `「自分がどんな音を出しているか知っていますか？」「相手がどんな音を出すか知っていますか？」`},
+        ],
+    tech:[
+      {type:"purple",head:`まず分けて考える`,body:
+      `足音や物音なのか、声やテレビ音なのか、設備の音なのかで、原因も対策も変わる。
+      ひとまとめにせず、何の音が気になるのかを整理すると理解しやすい。`},
+    ],
+    action:[
+      {do:true, s:
+        `気になる音が、足音なのか、声やテレビ音なのか、設備音なのかを分けて考える。`},
+      {do:false,s:
+        `どの音も同じような原因・対策だと思い込む。`},
+    ],
+  },
+},
+    {
+      label:`全く音が聞こえないわけではない理由`,
+      design:{
+        surface:[
+          {type:"purple",head:`自分×他人×建物の組み合わせ論`,body:
+          `建築基準法は全く音が聞こえないレベルを要求していない（壁の最低基準のみ）
+          コストと性能のトレードオフ
+          生活音は物理的にゼロにできない
+          隣人の属性は設計段階で予測不能（子ども・ペット・楽器・夜型）`},
+        ],
+        tech:[
+          {type:"green",head:`数値の位置づけ`,body:
+          `実験室で測定した値と、実建物で測定した値がある。
+          測定では±10dB程度の乖離が生じうる。[N1]
+          測定条件（室容積・残響時間・測定位置）によっても値が変わる。[N2]`},
+          {type:"amber",head:`代替注記`,body:
+          `数値は「目安・例・同仕様実績値」として考えざるをえない。
+          「保証」は基本的にできない。なんなら季節でも変わる。`},
+        ],
+        action:[
+          {do:true, s:
+            `「目安・例・同仕様実績値」として数値を提示する。
+              実建物での乖離可能性を資料に明記する。`},
+          {do:false,s:
+            `等級表示を保証値として扱う。
+            「このL値なら安心です」と言い切る。`},
+        ],
+      },
+      sales:{
+        surface:
+        `「L値が低いから静か」は正確ではない。
+        同じLH-55/LL-50でも隣人が子持ちか？老夫婦か？夜型か？等の属性によって体感は大きく変わる。
+        数値は「建物側の努力の証拠」であって「静かさの保証」ではない。`,
+        tech:[
+          {type:"purple",head:`期待値管理`,body:
+          `過度な期待値が生まれやすい。
+          「高遮音のはずなのに聞こえる」というクレームは説明不足が原因のことが多い？`},
+        ],
+        action:[
+          {do:true, s:
+            `「この数値は同仕様の実験室測定実績です」と毎回明言する。
+            「隣人の属性まではコントロールできない」と事前に伝える。`},
+          {do:false,s:
+            `「LH-55/LL-50保証」という表現を使う。
+            数値だけ示して「目安・実績値」の注記を省略する。`},
+        ],
+      },
+      consumer: WIP,
+    },
+  ],
+  floor:{
+    plan:[
+      {
+        label:`流れと確認時点を把握する`,
+        design:{
+          surface:
+          `床衝撃音対策は、企画、設計、施工、竣工確認までの流れの中で決まる。  
+          最初に把握すべきなのは、どの段階で何を決め、どの段階で何を確認し、どの段階で何を測定するかである。  
+          後工程になるほど変更は難しくなり、手戻りコストは大きくなる。
+          `,
+          tech:[
+            {type:"green",head:`工程ごとの役割`,body:
+            `企画段階で行うのは、LH・LLの目標水準の設定である。  
+            設計段階では、その目標に対してスラブ、床仕様、壁、設備などの仕様を整理する。  
+            施工段階では、防振材、吸音材、排水管まわりなど完成後に見えなくなる部分を床仕上げ構造施工前に確認することが重要である。  
+            本資料では、実際の測定は、中間および竣工時の２度、実住戸で行うのが基本とする。設計目標値、実建物実測値の対応を比較し、目標達成かどうかを判断する。
+            `},
+          ],
+          action:[
+            {do:true, s:
+              `企画、設計、施工、竣工確認の各段階で、「何を決めるか」「何を確認するか」「何を測るか」を整理する。  
+              `},
+            {do:false,s:
+              `最初に工程全体を整理しない。  
+              企画段階で決めることと、竣工時に確認することを混同する。  
+              設計目標値、実験室値、実建物実測値を同じ意味で扱う。
+              `},
+          ],
+        },
+      },
+      {
+        label:`目標L値の設定`,
+        design:{
+          surface:
+          `企画段階でLH値・LL値の目標を設定する。`,
+          tech:[
+            {type:"green",head:`スラブ厚との関係`,body:
+            `LH-55/LL-50: 本資料における企画目標の一例。[P1]
+            等価スラブ厚200mmでおよそLH-55/LL-50が達成できる可能性が高いが、とはいえ厚ければ必ずいいわけではない[P2]。
+            床仕上げ構造や天井、施工精度にもよる。また、測定にもばらつきがある。
+            上記数値は計算した目標値であり、実建物における測定性能を2026年現在予測で担保することは難しい。`},
+          ],
+          action:[
+            {do:true, s:
+              `LH・LL両方の目標値を企画書に明記する。
+              目標値の根拠（設計計算・過去データとの整合性等）を記録する。`},
+            {do:false,s:
+              `目標性能を管理しない。
+              LHとLLを混同して単一数値で管理する。
+              実験室値と実建物値の違いが理解できていない。`},
+          ],
+        },
+      },
+    ],
+    design:[
+  {
+  label:`重量床衝撃音の確認ポイント`,
+  design:{
+    surface:
+    `まず躯体側の成立条件を整理し、その後に床仕上げ構造や天井構成の採否を判断する。
+    つまり、「床材を何にするか」から入るのではなく、「この住戸で必要な躯体条件は何か」を先に決める。
+    床仕上げ構造、天井の仕様は、その条件を前提として選定する。`,
+    tech:[
+      {type:"green",head:`なぜこの順番で考えるか`,body:
+      `RCの場合、床仕上げ材単体よりも、スラブ、梁、支持条件、床組剛性、付加質量などの影響を強く受ける。
+      そのため、設計初期にはインピーダンス法等の予測法や既往実測を用いて、まず躯体側の必要条件を見積もる必要がある。
+      乾式二重床、床仕上げ構造、天井構成の実験室データは、その後に「この躯体条件の上で採用してよいか」を判断する根拠として使う。`},
+      {type:"amber",head:`床仕上げ構造データの読み方`,body:
+      `メーカーカタログ記載の性能値は、あくまでも実験室における特定条件を前提としたΔLL、ΔLHや推定LL・LHの情報であり、選定根拠として扱うには実際の建物における性能が発現されるかどうかはわからない。
+      これをもって重量床衝撃音性能を直接判断しないこと。
+      `},
+    ],
+    action:[
+      {do:true, s:
+        `最初に構造形式を分けて考える。
+        RC造ではスラブ・梁・支持条件を、鉄骨ALC・木造では床組剛性・重量・吸音処理を先に整理する。
+        その後に二重床、床仕上げ構造、天井の採否を決める。`},
+      {do:false,s:
+        `最初に床材や二重床の製品選定から入る。
+        実験室データやメーカー表示だけでLHの達成可否を判断する。
+        躯体条件を決める前に床仕上げ構造・天井を先に確定する。`},
+    ],
+  },
+},
+  {
+    label:`軽量床衝撃音の確認ポイント`,
+    design:{
+      surface:
+      `軽量床衝撃音では、床仕上げ構造を主たる選定対象として考える。
+    まず、直貼りか二重床かという床構成を決め、その上で床材、緩衝層、支持脚仕様を整理する。
+    つまり、軽量床衝撃音では「どの床仕上げ構造を採るか」が設計上の中心になる。
+      `,
+      tech:[
+        {type:"green",head:`なぜ床仕上げ構造が主になるか`,body:
+        `床表面の仕上げ材、緩衝材、支持脚、表層構成の影響を強く受ける。
+      そのため、重量床衝撃音のように躯体条件を一次条件とするのではなく、床仕上げ構造の比較・選定が主要な設計行為となる。
+      直貼り防音床材の性能表示、乾式二重床システムの実験室データ、同仕様建物の実測データは、いずれも選定根拠として使える。
+      ただし、等級表示をそのまま実建物性能と同一視しない。
+        `},
+              {type:"amber",head:`メーカー資料の読み方`,body:
+      `メーカーカタログ記載の性能値は、あくまでも実験室における特定条件を前提としたΔLL、ΔLHや推定LL・LHの情報であり、選定根拠として扱うには実際の建物における性能が発現されるかどうかはわからない。
+      これをもっ軽量量床衝撃音性能を直接判断しないこと。`},
+      ],
+      action:[
+        {do:true, s:
+          `最初に床構成を決める。
+        直貼りか二重床かを整理したうえで、防音タイプ床材、支持脚仕様、表層構成を選定する。
+        床材の性能表示や同仕様建物のデータは、床仕上げ構造の選定根拠として使う。`},
+        {do:false,s:
+          `床材名だけで性能を判断する。
+        直貼りと二重床を同じ考え方で比較する。
+        メーカー表示をそのまま実建物の LL 性能とみなす。`},
+      ],
+    },
+  },
+],
+    const:[
+  {
+  label:`床仕上げ構造を施工する前の確認と施工記録`,
+  design:{
+    surface:
+    `施工段階では、設計で選定した仕様が現場でそのまま実装されていることを確認する。
+    特に、床仕上げ構造を施工する前に、支持脚、防振材、吸音材、床下納まり等を確認し、記録を残す。
+    ここでは「何を採用したか」ではなく、「採用した仕様がそのまま入っているか」を確認することが中心になる。`,
+    tech:[
+      {type:"green",head:`なぜこの段階で確認が必要か`,body:
+      `床衝撃音性能は、仕様書に書いてあるだけでは成立せず、支持脚、防振材、吸音材、床下納まり、施工精度によって実際の性能が変わる。
+      特に、二重床支持脚の不均一、吸音材の未施工、仕様違いの代替品、納まりの変更は、性能に影響し得る。
+      そのため、床仕上げ構造を施工した後では確認が難しくなる部分を、この段階で確認する必要がある。`},
+      {type:"amber",head:`何を記録として残すか`,body:
+      `写真、納品書、承認記録、施工記録を残し、設計仕様と実施工の対応が追えるようにする。
+      代替品を使用した場合は、その理由と性能確認の有無も記録する。
+      この記録は、竣工後の性能確認や不具合対応の根拠にもなる。`},
+    ],
+    action:[
+      {do:true, s:
+        `支持脚、防振材、吸音材、床下納まり、仕様どおりの部材が施工されているかを床仕上げ構造を施工する前に確認する。
+        写真、納品書、承認記録、施工記録を残す。
+        代替品が入る場合は、性能確認の有無をあわせて記録する。`},
+      {do:false,s:
+        `仕様書に書いてあることを理由に現場確認を省略する。
+        床仕上げ構造を施工した後に確認しようとする。
+        代替品や現場変更を記録せずに流す。`},
+    ],
+  },
+},
+  {
+    label:`竣工時の性能確認`,
+    design:{
+      surface:
+      `竣工時には、必要に応じて代表住戸で性能確認を行い、設計目標との関係を確認する。
+      ここで行うのは、設計目標値どおりと断言するためではなく、実施工後の性能を確認し、設計条件との対応を把握することである。
+      実測結果は、同仕様建物の確認データとして蓄積する。`,
+      tech:[
+        {type:"green",head:`なぜ竣工時確認を行うか`,body:
+        `設計で要求した条件と、現場で成立した条件がそろっていても、最終的な性能は実建物で確認しないと分からない。
+        そのため、代表住戸での測定は、設計目標と実施工後の性能の関係を確認するために有効である。
+        実測値は、次案件の設計条件や同仕様採用時の根拠にもなる。`},
+        {type:"amber",head:`実測値の扱い`,body:
+        `実測値は、その住戸又はその住戸条件での確認結果であり、他住戸への無条件の保証値ではない。
+        設計目標値、同仕様実績値、実建物実測値は区別して扱う。
+        実測条件、住戸条件、測定時の前提もあわせて記録する。`},
+      ],
+      action:[
+        {do:true, s:
+          `必要に応じて代表住戸で測定を行い、設計目標との関係を確認する。
+          実測条件、住戸条件、結果を記録し、同仕様建物のデータとして蓄積する。`},
+        {do:false,s:
+          `実測なしで設計どおりの性能が成立したと断言する。
+          実測値をそのまま全住戸の保証値のように扱う。
+          測定条件を残さずに数値だけを記録する。`},
+      ],
+    },
+  },
+    ],
+    sales:[
+  {
+    label:`数値の見せ方・説明の原則`,
+    sales:{
+      surface:
+      `数値は示してよいが、数値だけを切り出して説明しない。
+      「何の数値か」「どういう条件の数値か」「保証値ではないこと」をセットで伝える。
+      つまり、数値そのものよりも、数値の意味を誤解なく説明することが重要である。`,
+      tech:[
+        {type:"purple",head:`なぜこの説明が必要か`,body:
+        `L値は分かりやすいため、購入者に強く印象づけやすい一方で、保証値や実住戸の確定値のように誤解されやすい。
+        実際には、設計目標値、同仕様実績値、実建物実測値は意味が異なる。
+        そのため、営業では数値を隠すのではなく、根拠の種類と限界を添えて説明する必要がある。`},
+      ],
+      action:[
+        {do:true, s:
+          `「この数値は同仕様実績値です」「目安です」「実住戸保証ではありません」をセットで説明する。
+          数値を出すときは、何の数値か、どういう条件の数値かをあわせて伝える。`},
+        {do:false,s:
+          `数値だけを示して良し悪しを断言する。
+          「この住戸はLH-55/LL-50だから安心です」「静かさが保証されています」と説明する。`},
+      ],
+    },
+    consumer:{
+      surface:
+      `資料に記載されている数値は、必ずしもあなたの住戸そのものの保証値ではありません。
+      最も重要なのは、販売主がどのような配慮をしているかと、数値が何を意味するかを理解することです。
+      まず確認すべきなのは、その数値が何の数値で、どういう条件で得られたものかという点です。
+      数値だけで判断せず、意味を確認することが大切です。`,
+      tech:[
+        {type:"purple",head:`確認すべきこと`,body:
+        `同じL値表記でも、設計目標、同仕様実績、実建物実測では意味が異なります。
+        そのため、数値を見るときは「この住戸の値なのか」「同仕様の参考値なのか」を確認する必要があります。`},
+      ],
+      action:[
+        {do:true, s:
+          `「この数値は同仕様実績ですか、実測ですか」と確認する。`},
+        {do:false,s:
+          `「LH-55/LL-50と書いてあるから絶対静か」と受け取る。`},
+      ],
+    },
+  },
+  {
+    label:`消費者への説明構造`,
+    sales:{
+      surface:
+      `説明の順序は、①音を決める前提、②建物側の対策、③数値の意味、④建物側で制御できない要素、の順にする。
+      いきなり「この物件は静かです」と言うのではなく、どういう配慮をしていて、どこに限界があるかまで説明する。
+      説明のゴールは、「努力は分かったが、全く音が聞こえないわけではないことも理解した」という状態にすることである。`,
+      tech:[
+        {type:"purple",head:`なぜこの順序が必要か`,body:
+        `購入者は数値や印象に引っ張られやすく、最初に「静かです」と言われると、後から限界を説明しても受け入れにくくなる。
+        そのため、まず音を決める要素を整理し、その上で建物側の配慮と数値の位置づけを説明する方が誤解が少ない。
+        説明の目的は、期待を上げることではなく、理解をそろえることである。`},
+      ],
+      action:[
+        {do:true, s:
+          `「音を決める要素」→「建物側の対策」→「数値の意味」→「限界」の順で説明する。
+          「対策はしているが、全く音が聞こえないわけではない」と明確に伝える。`},
+        {do:false,s:
+          `「この建物は静かです」で説明を始める。
+          数値だけで説明を終える。
+          隣人や住まい方の影響を最後まで説明しない。`},
+      ],
+    },
+    consumer:{
+      surface:
+      `住まいの音環境は、建物の性能だけでなく、暮らし方や周囲の条件でも変わります。
+      そのため、説明を受けるときは「どんな配慮がされているか」と「何が建物だけでは決まらないか」の両方を聞くことが大切です。`,
+      tech:[
+        {type:"purple",head:`聞くとよいこと`,body:
+        `建物側の対策、数値の意味、全く音が聞こえないわけではない理由の3点が説明されているかを確認すると、後の認識ずれが少なくなります。`},
+      ],
+      action:[
+        {do:true, s:
+          `建物側でどんな対策をしているかと、建物だけでは決まらない部分の両方を確認する。`},
+        {do:false,s:
+          `「静かです」という一言だけで判断する。`},
+      ],
+    },
+  },
+],
+    living:[
+  {
+    label:`入居後の生活音への配慮`,
+    sales:{
+      surface:
+      `入居後は、建物性能だけでなく、生活行動や時間帯への配慮によって音環境が大きく変わる。
+      そのため、入居時には「建物側の対策」とあわせて、「住まい方による配慮」も案内する。
+      ここでは、建物性能の説明を住まい方の説明につなげることが重要である。`,
+      tech:[
+        {type:"purple",head:`なぜ入居後説明が必要か`,body:
+        `音環境は、建物性能だけで決まるものではなく、生活時間帯、足音、家具の移動、家電の使い方などの影響も受ける。
+        入居前には理解しにくいが、入居後にはじめて当事者として意識されやすい。
+        そのため、販売段階の説明だけで終わらせず、入居後の配慮事項として具体化して伝えることが有効である。`},
+      ],
+      action:[
+        {do:true, s:
+          `入居時に、生活音への配慮事項を具体例とともに案内する。
+          建物性能の説明とあわせて、「住まい方で変わる部分」があることを伝える。`},
+        {do:false,s:
+          `建物性能の説明だけで終える。
+          入居後の生活音配慮を、住民の常識任せにする。`},
+      ],
+    },
+    consumer:{
+      surface:
+      `入居後の音環境は、建物の性能だけでなく、自分や周囲の暮らし方によっても変わります。
+      特に、足音、家具の移動、夜間の家事、音の出る機器の使い方は、住戸間で聞こえ方に差が出やすいポイントです。
+      建物性能があるから何をしても大丈夫、とは考えない方がよいです。`,
+      tech:[
+        {type:"purple",head:`気をつけたいこと`,body:
+        `子どもの足音、椅子や家具の引きずり、夜間の洗濯・掃除、スピーカーやテレビの置き方などは、周囲に伝わりやすい場合がある。
+        住み始めは感覚がつかみにくいため、まずは時間帯や行動に少し余裕を持って考えることが大切である。`},
+      ],
+      action:[
+        {do:true, s:
+          `夜間の生活音、足音、家具の移動、音の出る機器の使い方に配慮する。`},
+        {do:false,s:
+          `建物が高性能なら何をしても問題ないと考える。`},
+      ],
+    },
+  },
+  {
+    label:`気になるときの確認と相談`,
+    sales:{
+      surface:
+      `入居後に音が気になる場合は、いきなり性能不良と決めつけるのではなく、状況を整理して確認する導線を用意する。
+      ここでは、建物性能の問題と生活行動の問題を切り分けながら、相談先と確認手順を案内することが重要である。`,
+      tech:[
+        {type:"purple",head:`なぜ整理が必要か`,body:
+        `音の問題は、建物性能、住まい方、時間帯、感じ方の組合せで生じるため、すぐに原因を一つに決められないことが多い。
+        そのため、入居後の案内では、「いつ、どの音が、どの程度気になるか」を整理し、必要に応じて管理会社や事業者へ相談する流れを示しておくことが有効である。`},
+      ],
+      action:[
+        {do:true, s:
+          `相談時には、音の種類、時間帯、頻度、気になる場所を整理してもらう。
+          管理会社や事業者への相談導線をあらかじめ示しておく。`},
+        {do:false,s:
+          `気になったらすぐ性能不良と断定する。
+          相談先や確認手順を示さない。`},
+      ],
+    },
+    consumer:{
+      surface:
+      `音が気になる場合は、すぐに「欠陥だ」と決めつけるのではなく、どの音が、いつ、どこで、どのくらい気になるのかを整理することが大切です。
+      そのうえで、必要に応じて管理会社や事業者に相談します。
+      建物の問題か、暮らし方の問題かは、整理してみないと分からないことがあります。`,
+      tech:[
+        {type:"purple",head:`相談前に整理するとよいこと`,body:
+        `足音なのか、物音なのか、設備音なのか。
+        いつ起きるのか、毎日か、たまになのか。
+        どの部屋で強く感じるのか。
+        こうした点を整理しておくと、相談がしやすくなる。`},
+      ],
+      action:[
+        {do:true, s:
+          `音の種類、時間帯、頻度、場所を整理してから相談する。`},
+        {do:false,s:
+          `状況を整理せずに、すぐ欠陥や故障だと決めつける。`},
+      ],
+    },
+  },
+],
+  },
+};
+
+// ── STATE ──
+let ct = "basics";
+let cp = "plan";
+let gd = "surface";
+let rowFilter = "";
+let citeOnly = false;
+
+const PHASE_TECH_ONLY = new Set(["plan", "design", "const"]);
+const PHASE_MIXED = new Set(["sales", "living"]);
+
+function getRows(){
+  if(ct === "basics") return D.basics;
+  return D.floor[cp] || [];
+}
+
+function getColumnMode(){
+  if(ct === "basics") return "three";
+  if(PHASE_TECH_ONLY.has(cp)) return "tech";
+  if(PHASE_MIXED.has(cp)) return "mixed";
+  return "three";
+}
+
+function getColumns(){
+  const mode = getColumnMode();
+  if(mode === "tech"){
+    return [{ key: "design", label: "設計・技術", headerClass: "col-design", cellClass: "col-design", indicator: "design" }];
+  }
+  if(mode === "mixed"){
+    return [
+      { key: "sales", label: "営業", headerClass: "col-sales", cellClass: "col-sales", indicator: "sales" },
+      { key: "consumer", label: "消費者", headerClass: "col-consumer", cellClass: "col-consumer", indicator: "consumer" },
+    ];
+  }
+  return [
+    { key: "design", label: "設計・技術", headerClass: "col-design", cellClass: "col-design", indicator: "design" },
+    { key: "sales", label: "営業", headerClass: "col-sales", cellClass: "col-sales", indicator: "sales" },
+    { key: "consumer", label: "消費者", headerClass: "col-consumer", cellClass: "col-consumer", indicator: "consumer" },
+  ];
+}
+
+function getRowSearchText(row){
+  return [
+    row.label,
+    row.design?.surface,
+    ...(row.design?.tech || []).map(x => x.body),
+    ...(row.design?.action || []).map(x => x.s),
+    row.sales?.surface,
+    ...(row.sales?.tech || []).map(x => x.body),
+    ...(row.sales?.action || []).map(x => x.s),
+    row.consumer?.surface,
+    ...(row.consumer?.tech || []).map(x => x.body),
+    ...(row.consumer?.action || []).map(x => x.s),
+  ].filter(Boolean).join("\n").toLowerCase();
+}
+
+function filterRows(rows){
+  return rows.filter(row => {
+    if(rowFilter && !getRowSearchText(row).includes(rowFilter)) return false;
+    if(citeOnly && !collectSourceIdsFromRow(row).length) return false;
+    return true;
+  });
+}
+
+function renderSourcePanel(rows){
+  if(!canShowTechCitations()){
+    dom.sourceWrap.hidden = true;
+    dom.sourceList.innerHTML = "";
+    dom.sourceSub.textContent = "技術詳細で参照している出典";
+    return;
+  }
+
+  const ids = [...new Set(rows.flatMap(collectSourceIdsFromRow))];
+  if(!ids.length){
+    dom.sourceWrap.hidden = true;
+    dom.sourceList.innerHTML = "";
+    dom.sourceSub.textContent = "技術詳細で参照している出典";
+    return;
+  }
+
+  dom.sourceWrap.hidden = false;
+  dom.sourceSub.textContent = `技術詳細で ${ids.length} 件の引用・注記を表示中`;
+  dom.sourceList.innerHTML = ids.map(id => {
+    const s = SOURCES[id] || { title: "出典未設定", note: "SOURCES に追加してください。", url: "" };
+    return `<div class="source-item" id="src-${id}">
+      <div class="source-title"><span class="source-code">${id}</span>${s.title}</div>
+      ${s.note ? `<div class="source-note">${s.note}</div>` : ""}
+      ${s.url ? `<a class="source-link" href="${s.url}" target="_blank" rel="noopener noreferrer">参照先を開く</a>` : ""}
+    </div>`;
+  }).join("");
+}
+
+function renderHead(){
+  const cols = getColumns();
+  dom.thead.innerHTML = `<tr><th>項目</th>${cols.map(c => `<th class="${c.headerClass}"><span class="col-indicator ${c.indicator}"></span>${c.label}</th>`).join("")}</tr>`;
+  dom.mainTable.classList.toggle("table-compact", getColumnMode() !== "three");
+}
+
+function renderLegendAndNote(){
+  const mode = getColumnMode();
+  if(mode === "tech"){
+    dom.legend.innerHTML = `<span class="leg"><span class="leg-dot" style="background:var(--purple-strong)"></span>このフェーズでは技術者向けの項目のみを表示</span>`;
+    dom.modeNote.innerHTML = `<strong>いま見ているのは技術者向けの整理です。</strong><span class="mini">要求性能、選定条件、施工確認の骨子だけを表に残し、詳細な根拠や測定方法は後段で追加できる構成にしています。</span>`;
+    return;
+  }
+  if(mode === "mixed"){
+    dom.legend.innerHTML = `<span class="leg"><span class="leg-dot" style="background:var(--teal-strong)"></span>このフェーズでは営業と消費者の関係を表示</span>`;
+    dom.modeNote.innerHTML = `<strong>いま見ているのは説明と受け取り方の整理です。</strong><span class="mini">営業はどう伝えるか、消費者はどう理解するかに絞って表示しています。</span>`;
+    return;
+  }
+  dom.legend.innerHTML = `
+    <span class="leg"><span class="leg-dot" style="background:var(--purple-strong)"></span>設計・技術</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--purple-strong)"></span>営業</span>
+    <span class="leg"><span class="leg-dot" style="background:var(--consumer-strong)"></span>消費者</span>`;
+  dom.modeNote.innerHTML = `<strong>基礎編は3者「設計者」「営業」「消費者」の見方を並べて表示します。</strong><span class="mini">前提の違い、説明の違い、受け取り方の違いを同じ表で比較できるようにしています。</span>`;
+}
+
+function syncToolControls(){
+  const canFilterByCites = canShowTechCitations();
+  dom.citeOnly.parentElement.style.display = canFilterByCites ? "inline-flex" : "none";
+  if(!canFilterByCites){
+    citeOnly = false;
+    dom.citeOnly.checked = false;
+  }
+}
+
+function render(){
+  renderHead();
+  renderLegendAndNote();
+  syncToolControls();
+
+  const cols = getColumns();
+  const allRows = getRows();
+  const rows = filterRows(allRows);
+  dom.tbody.innerHTML = "";
+
+  if(!rows.length){
+    const tr = document.createElement("tr");
+    tr.className = "empty-state";
+    tr.innerHTML = `<td class="row-label">該当なし</td><td colspan="${cols.length}">条件に一致する項目がありません。</td>`;
+    dom.tbody.appendChild(tr);
+  } else {
+    rows.forEach(row => {
+      const tr = document.createElement("tr");
+      tr.innerHTML = `
+        <td class="row-label">${row.label}</td>
+        ${cols.map(c => `<td class="${c.cellClass}">${renderCell(row[c.key], gd, c.key)}</td>`).join("")}`;
+      dom.tbody.appendChild(tr);
+    });
+  }
+
+  dom.toolStatus.textContent = `${rows.length} / ${allRows.length} 件`;
+  renderSourcePanel(rows);
+}
+
+// ── EVENTS ──
+const dom = {
+  topicTabs: document.getElementById("ttabs"),
+  phaseRow: document.getElementById("prow"),
+  depthRow: document.querySelector(".depth-row"),
+  mainTable: document.getElementById("main-table"),
+  thead: document.getElementById("thead"),
+  tbody: document.getElementById("tbody"),
+  legend: document.getElementById("legend"),
+  modeNote: document.getElementById("mode-note"),
+  rowFilter: document.getElementById("row-filter"),
+  citeOnly: document.getElementById("cite-only"),
+  toolStatus: document.getElementById("tool-status"),
+  sourceWrap: document.getElementById("source-wrap"),
+  sourceList: document.getElementById("source-list"),
+  sourceSub: document.getElementById("source-sub"),
+};
+
+function syncTopicButtons(){
+  document.querySelectorAll("[data-t]").forEach(el => el.classList.toggle("act-topic", el.dataset.t === ct));
+}
+
+function syncPhaseButtons(){
+  document.querySelectorAll("[data-ph]").forEach(el => el.classList.toggle("act-phase", el.dataset.ph === cp));
+}
+
+function syncDepthButtons(){
+  document.querySelectorAll("[data-d]").forEach(el => el.classList.toggle("act-depth", el.dataset.d === gd));
+}
+
+function syncPhaseRow(){
+  dom.phaseRow.style.display = ct === "floor" ? "flex" : "none";
+}
+
+function setTopic(topic){
+  ct = topic;
+  if(ct === "floor" && !D.floor[cp]) cp = "plan";
+  syncTopicButtons();
+  syncPhaseButtons();
+  syncPhaseRow();
+  render();
+}
+
+function setPhase(phase){
+  cp = phase;
+  syncPhaseButtons();
+  render();
+}
+
+function setDepth(depth){
+  gd = depth;
+  syncDepthButtons();
+  render();
+}
+
+dom.topicTabs.addEventListener("click", e => {
+  const button = e.target.closest("[data-t]");
+  if(!button || button.dataset.t === ct) return;
+  setTopic(button.dataset.t);
+});
+
+dom.phaseRow.addEventListener("click", e => {
+  const button = e.target.closest("[data-ph]");
+  if(!button || button.dataset.ph === cp) return;
+  setPhase(button.dataset.ph);
+});
+
+dom.depthRow.addEventListener("click", e => {
+  const button = e.target.closest("[data-d]");
+  if(!button || button.dataset.d === gd) return;
+  setDepth(button.dataset.d);
+});
+
+dom.rowFilter.addEventListener("input", e => {
+  rowFilter = e.target.value.trim().toLowerCase();
+  render();
+});
+
+dom.citeOnly.addEventListener("change", e => {
+  citeOnly = e.target.checked;
+  render();
+});
+
+syncTopicButtons();
+syncPhaseButtons();
+syncDepthButtons();
+syncPhaseRow();
+render();
+</script>
+</body>
+</html>
